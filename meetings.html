@@ -46,76 +46,78 @@
   <footer>
     <p>© 2025 Light-Ion Physics Group</p>
   </footer>
-  <script>
-    // List your meetings here (add more as needed)
-    const meetings = [
-      { date: '2025-07-10', title: 'Deuteron breakup simulations' },
-      { date: '2025-07-24', title: 'TMDs and SIDIS kinematics' }
-    ];
+    <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      // List your meetings here (add more as needed)
+      const meetings = [
+        { date: '2025-07-10', title: 'Deuteron breakup simulations' },
+        { date: '2025-07-24', title: 'TMDs and SIDIS kinematics' }
+      ];
 
-    // Get current month and year
-    const today = new Date();
-    const month = today.getMonth(); // 0-indexed
-    const year = today.getFullYear();
+      // Get current month and year
+      const today = new Date();
+      const month = today.getMonth(); // 0-indexed
+      const year = today.getFullYear();
 
-    // For demo: show July 2025 if today is not July 2025
-    let displayMonth = month;
-    let displayYear = year;
-    if (!(month === 6 && year === 2025)) {
-      displayMonth = 6; // July
-      displayYear = 2025;
-    }
-
-    // Get meeting days for the displayed month/year
-    const meetingDays = {};
-    meetings.forEach(m => {
-      const d = new Date(m.date);
-      if (d.getMonth() === displayMonth && d.getFullYear() === displayYear) {
-        meetingDays[d.getDate()] = m.title;
+      // For demo: show July 2025 if today is not July 2025
+      let displayMonth = month;
+      let displayYear = year;
+      if (!(month === 6 && year === 2025)) {
+        displayMonth = 6; // July
+        displayYear = 2025;
       }
-    });
 
-    // Month names
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-
-    // Set calendar title
-    document.getElementById('calendar-title').textContent =
-      monthNames[displayMonth] + ' ' + displayYear;
-
-    // Build calendar
-    function buildCalendar(month, year) {
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      let html = '<table class="calendar"><tr>';
-      html += '<th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
-
-      // Empty cells before first day
-      for (let i = 0; i < firstDay; i++) html += '<td></td>';
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const weekday = (firstDay + day - 1) % 7;
-        const meetingTitle = meetingDays[day];
-        if (meetingTitle) {
-          html += `<td class="meeting" title="${meetingTitle}">${day}</td>`;
-        } else {
-          html += `<td>${day}</td>`;
+      // Get meeting days for the displayed month/year
+      const meetingDays = {};
+      meetings.forEach(m => {
+        const d = new Date(m.date);
+        if (d.getMonth() === displayMonth && d.getFullYear() === displayYear) {
+          meetingDays[d.getDate()] = m.title;
         }
-        if (weekday === 6 && day !== daysInMonth) html += '</tr><tr>';
+      });
+
+      // Month names
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+
+      // Set calendar title
+      document.getElementById('calendar-title').textContent =
+        monthNames[displayMonth] + ' ' + displayYear;
+
+      // Build calendar
+      function buildCalendar(month, year) {
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        let html = '<table class="calendar"><tr>';
+        html += '<th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
+
+        // Empty cells before first day
+        for (let i = 0; i < firstDay; i++) html += '<td></td>';
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const weekday = (firstDay + day - 1) % 7;
+          const meetingTitle = meetingDays[day];
+          if (meetingTitle) {
+            html += `<td class="meeting" title="${meetingTitle}">${day}</td>`;
+          } else {
+            html += `<td>${day}</td>`;
+          }
+          if (weekday === 6 && day !== daysInMonth) html += '</tr><tr>';
+        }
+
+        // Empty cells after last day
+        const lastDay = new Date(year, month, daysInMonth).getDay();
+        for (let i = lastDay + 1; i <= 6; i++) html += '<td></td>';
+
+        html += '</tr></table>';
+        return html;
       }
 
-      // Empty cells after last day
-      const lastDay = new Date(year, month, daysInMonth).getDay();
-      for (let i = lastDay + 1; i <= 6; i++) html += '<td></td>';
-
-      html += '</tr></table>';
-      return html;
-    }
-
-    document.getElementById('calendar-container').innerHTML =
-      buildCalendar(displayMonth, displayYear);
+      document.getElementById('calendar-container').innerHTML =
+        buildCalendar(displayMonth, displayYear);
+    });
   </script>
 </body>
 </html>
