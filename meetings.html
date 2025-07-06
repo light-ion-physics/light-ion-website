@@ -8,14 +8,15 @@
   <style>
     table.calendar {
       border-collapse: collapse;
-      width: 350px;
+      width: 600px;
       margin: 20px 0;
     }
     table.calendar th, table.calendar td {
       border: 1px solid #888;
-      width: 14.2%;
-      height: 40px;
+      width: 85px;
+      height: 60px;
       text-align: center;
+      font-size: 1.2em;
     }
     table.calendar th {
       background: #f0f0f0;
@@ -59,23 +60,11 @@
       const month = today.getMonth(); // 0-indexed
       const year = today.getFullYear();
 
-      // For demo: show July 2025 if today is not July 2025
       let displayMonth = month;
       let displayYear = year;
-      if (!(month === 6 && year === 2025)) {
-        displayMonth = 6; // July
-        displayYear = 2025;
-      }
+      
 
-      // Get meeting days for the displayed month/year
-      const meetingDays = {};
-      meetings.forEach(m => {
-        const d = new Date(m.date);
-        if (d.getMonth() === displayMonth && d.getFullYear() === displayYear) {
-          meetingDays[d.getDate()] = m.title;
-        }
-      });
-
+      
       // Month names
       const monthNames = [
         "January", "February", "March", "April", "May", "June",
@@ -86,34 +75,43 @@
       document.getElementById('calendar-title').textContent =
         monthNames[displayMonth] + ' ' + displayYear;
 
-      // Build calendar
-      function buildCalendar(month, year) {
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        let html = '<table class="calendar"><tr>';
-        html += '<th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
-
-        // Empty cells before first day
-        for (let i = 0; i < firstDay; i++) html += '<td></td>';
-
-        for (let day = 1; day <= daysInMonth; day++) {
-          const weekday = (firstDay + day - 1) % 7;
-          const meetingTitle = meetingDays[day];
-          if (meetingTitle) {
-            html += `<td class="meeting" title="${meetingTitle}">${day}</td>`;
-          } else {
-            html += `<td>${day}</td>`;
-          }
-          if (weekday === 6 && day !== daysInMonth) html += '</tr><tr>';
+     function buildCalendar(month, year) {
+    // Compute meeting days for the displayed month/year
+    const meetingDays = {};
+    meetings.forEach(m => {
+        const [y, mth, day] = m.date.split('-').map(Number);
+        const d = new Date(y, mth - 1, day);
+        if (d.getMonth() === month && d.getFullYear() === year) {
+        meetingDays[d.getDate()] = m.title;
         }
+    });
 
-        // Empty cells after last day
-        const lastDay = new Date(year, month, daysInMonth).getDay();
-        for (let i = lastDay + 1; i <= 6; i++) html += '<td></td>';
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let html = '<table class="calendar"><tr>';
+    html += '<th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
 
-        html += '</tr></table>';
-        return html;
-      }
+    // Empty cells before first day
+    for (let i = 0; i < firstDay; i++) html += '<td></td>';
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const weekday = (firstDay + day - 1) % 7;
+        const meetingTitle = meetingDays[day];
+        if (meetingTitle) {
+        html += `<td class="meeting" title="${meetingTitle}">${day}</td>`;
+        } else {
+        html += `<td>${day}</td>`;
+        }
+        if (weekday === 6 && day !== daysInMonth) html += '</tr><tr>';
+    }
+
+    // Empty cells after last day
+    const lastDay = new Date(year, month, daysInMonth).getDay();
+    for (let i = lastDay + 1; i <= 6; i++) html += '<td></td>';
+
+    html += '</tr></table>';
+    return html;
+    }
 
       document.getElementById('calendar-container').innerHTML =
         buildCalendar(displayMonth, displayYear);
