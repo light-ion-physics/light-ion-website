@@ -8,13 +8,13 @@
   <style>
     table.calendar {
       border-collapse: collapse;
-      width: 600px;
-      margin: 20px 0;
+      width: 1200px;
+      margin: 30px 0;
     }
     table.calendar th, table.calendar td {
       border: 1px solid #888;
       width: 85px;
-      height: 60px;
+      height: 100px;
       text-align: center;
       font-size: 1.2em;
     }
@@ -29,24 +29,34 @@
 </head>
 <body>
   <header>
-    <h1>Meetings</h1>
+  <div class="header-left">
+    <h1>Light-Ion Physics in the EIC Era</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="about.html">About</a>
       <a href="meetings.html">Meetings</a>
       <a href="Resources.html">Resources</a>
-      <a href="#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </nav>
+  </div>
+
+  <img src="images/nuclearschool25_logo.png" alt="Light Ion Physics">
   </header>
   <main>
+    
+
+
+    <div class="text-image-wrapper">
+    <div class="text-content">
     <h2 id="calendar-title"></h2>
     <div id="calendar-container"></div>
     <ul>
       <li><b>July 10, 2025</b> – TBA (not real dates, making calendar)</li>
       <li><b>July 24, 2025</b> – TBA</li>
     </ul>
-
-    <img src="images/nuclearschool25_logo.png" alt="Light Ion Physics" width="400" />
+    </div>
+    <img src="images/emergenceQCD.png" alt="Light Ion Physics" class="side-image" />
+    </div>
+    
   </main>
   <footer>
     <p>© 2025 Light-Ion Physics Group</p>
@@ -55,8 +65,8 @@
     window.addEventListener('DOMContentLoaded', function() {
       // List your meetings here (add more as needed)
       const meetings = [
-        { date: '2025-07-10', title: 'Deuteron breakup simulations' },
-        { date: '2025-07-24', title: 'TMDs and SIDIS kinematics' }
+        { date: '2025-07-9', title: 'Deuteron' },
+        { date: '2025-07-24', title: 'TMDs' }
       ];
 
       // Get current month and year

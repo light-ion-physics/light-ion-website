@@ -6,10 +6,20 @@ body {
 }
 
 header {
+  font-size: 30px;
+  display: flex; /* ✅ Add this */
+  justify-content: space-between;
+  align-items: center;
   background-color: #004466;
   color: white;
   padding: 1rem;
   border-radius: 8px;
+}
+
+/* Optional: To stack the heading and nav vertically */
+.header-left {
+  display: flex;
+  flex-direction: column;
 }
 
 nav a {
@@ -22,6 +32,11 @@ nav a:hover {
   text-decoration: underline;
 }
 
+header img {
+  width: 200px; /* ✅ Add these to style the logo */
+  height: auto;
+}
+
 section {
   margin-top: 2rem;
 }
@@ -32,6 +47,27 @@ footer {
   border-top: 1px solid #ccc;
   text-align: center;
 }
+
 p {
-  font-size: 20px;
+  font-size: 22px;
+}
+
+ul {
+  font-size: 22px;
+}
+
+.text-image-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.text-content {
+  flex: 1;
+}
+
+.side-image {
+  width: 400px; /* or 600px as you had before */
+  max-width: 100%;
+  height: auto;
 }
